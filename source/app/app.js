@@ -1,4 +1,5 @@
-import {Render} from "react-dom";
-// import {Test} from "./test";
+// import React from 'react';
+// import Render from "react-dom";
+// import Test from "./test";
 
-Render(<div />, document.getElementById('app'));
+//Render(<div />, document.getElementById('app'));

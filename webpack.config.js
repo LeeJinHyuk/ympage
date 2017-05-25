@@ -10,8 +10,7 @@ module.exports = {
   },
   output : {
     path : path.join(__dirname, "source/dist"),
-    filename : "[name]-[hash].js",
-    publicPath : "source/app"
+    filename : "[name]-[hash].js"
   },
   module : {
     rules :
@@ -30,6 +29,10 @@ module.exports = {
         ],
       }
     ],
+  },
+  resolve: {
+    modules: ['node_modules'],
+    extensions: ['.js', '.json', '.jsx', '.css']
   },
   plugins : [
     new HtmlWebpackPlugin({
