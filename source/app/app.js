@@ -1,5 +1,5 @@
-// import React from 'react';
-// import Render from "react-dom";
+import React from 'react';
+import ReactDom from "react-dom";
 // import Test from "./test";
 
-//Render(<div />, document.getElementById('app'));
+ReactDom.render(<div>test</div>, document.getElementById('app'));

@@ -39,6 +39,9 @@ module.exports = {
       title : "Seoul Parking",
       template : path.join(__dirname, "source/index.html")
     }),
-    new WebpackCleanupPlugin()
+    new WebpackCleanupPlugin(),
+    new webpack.optimize.CommonsChunkPlugin({
+      name : "vendor"
+    })
   ]
 };
