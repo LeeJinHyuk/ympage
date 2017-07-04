@@ -5,12 +5,12 @@ const WebpackCleanupPlugin = require("webpack-cleanup-plugin");
 
 module.exports = {
   entry : {
-    app : "./source/app/app.js",
-    vendor: ["react", "react-dom"]
+    app : path.join(__dirname, "source/app/app.js")
   },
   output : {
     path : path.join(__dirname, "source/dist"),
-    filename : "[name]-[hash].js"
+    filename : "[name]-[hash].js",
+    publicPath : "/"
   },
   module : {
     rules :
@@ -36,12 +36,15 @@ module.exports = {
   },
   plugins : [
     new HtmlWebpackPlugin({
-      title : "Seoul Parking",
+      title : "Seoul Teenager",
       template : path.join(__dirname, "source/index.html")
     }),
     new WebpackCleanupPlugin(),
     new webpack.optimize.CommonsChunkPlugin({
-      name : "vendor"
+      name : "vendor",
+      minChunks: function (module) {
+        return module.context && module.context.indexOf('node_modules') !== -1;
+      }
     })
   ]
 };
