@@ -7,6 +7,10 @@ module.exports = {
   entry : {
     app : path.join(__dirname, "source/app/client/index.js")
   },
+  devtool : "inline-source-map",
+  devServer : {
+    contentBase : "./dist"
+  },
   output : {
     path : path.join(__dirname, "source/dist"),
     filename : "[name]-[hash].js"
