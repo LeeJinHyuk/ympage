@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import {Route} from "react-router-dom";
-import Main from "./main/main";
+import {Main} from "./pages";
 
 class App extends Component {
     render() {
