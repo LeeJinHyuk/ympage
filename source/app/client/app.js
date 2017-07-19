@@ -7,8 +7,7 @@ class App extends Component {
         return (
             <div>
                 <Route exact path="/" component={Main} />
-                <Route path="/serve" component={Main} />
-                <Route path="/international" component={Main} />
+                <Route path="/:type" component={Main} />
             </div>
         );
     }
