@@ -36,7 +36,7 @@ module.exports = {
     resolve: {
         modules: [
             path.resolve(__dirname, "source/app/client"),
-            path.resolve(__dirname, "node_modules")
+            "node_modules"
         ],
         extensions: ['.js', '.json', '.jsx', '.css']
     },
