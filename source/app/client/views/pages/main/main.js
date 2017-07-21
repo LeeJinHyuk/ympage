@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {Route} from "react-router-dom";
-import {MainHeader} from "components";
-import {Activity, Serve, International} from "pages";
+import {MainHeader} from "views/components";
+import {Activity, Serve, International} from "views/pages";
 
 class Main extends Component {
 

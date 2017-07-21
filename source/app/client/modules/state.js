@@ -3,13 +3,13 @@ const CHANGE_TAB = "app/modules/state/CHANGE_TAB";
 
 // Init value
 const init_value = {
-    index : "0"
+    tab_index : "0"
 };
 
 // Action Creators
 export const changeTab = (_index) => ({
     type : CHANGE_TAB,
-    index : _index
+    tab_index : _index
 });
 
 // Reducer
