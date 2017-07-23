@@ -13,6 +13,13 @@ export const changeTab = (_index) => ({
 });
 
 // Reducer
-export default reducer = (_state, _action) => ({
-
-});
+export default reducer = (_state = init_value, _action) => {
+    switch(_action.type) {
+        case CHANGE_TAB :
+            return Object.assign({}, _state, {
+                tab_index : _state.tab_index
+            });
+        default :
+            return state;
+    }
+};
