@@ -6,17 +6,19 @@ const init_value = {
     tab_index : "0"
 };
 
-// Reducer
-export default function reducer (_state = init_value, _action = {}) {
-    switch(_action.type) {
+
+const reducer = (_state = init_value, _action) => {
+    switch (_action.type) {
         case CHANGE_TAB :
             return Object.assign({}, _state, {
                 tab_index : _state.tab_index
             });
-        default :
+        default:
             return _state;
     }
 };
+
+export default reducer;
 
 // Action Creators
 export const changeTab = (_index) => ({

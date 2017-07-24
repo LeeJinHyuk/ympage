@@ -1,1 +1,6 @@
-export {default as Reducer} from "modules/state";
+import { combineReducers } from 'redux';
+import Reducer from "modules/state";
+
+export default combineReducers({
+  	Reducer
+});
