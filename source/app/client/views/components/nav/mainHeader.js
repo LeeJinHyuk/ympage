@@ -1,16 +1,17 @@
 import React, {Component} from "react";
-import {NavLink} from "react-router-dom";
+import {Link} from "react-router";
 
 class MainHeader extends Component {
 
     render() {
+        const {router} = this.context;
 
         return (
             <div id="main-header">
                 <ul>
-                    <li><NavLink to="/" className="nav-item" activeClassName="active">청소년 인증 프로그램</NavLink></li>
-                    <li><NavLink to="/serve" className="nav-item" activeClassName="active">청소년 자원봉사 프로그램</NavLink></li>
-                    <li><NavLink to="/international" className="nav-item" activeClassName="active">청소년 국제 프로그램</NavLink></li>
+                    <li><Link to="/" className={"nav-item" + router.isActive("/", true) ? "active" : ""}>청소년 인증 프로그램</Link></li>
+                    <li><Link to="/serve" className={"nav-item" + router.isActive("/", true) ? "active" : ""}>청소년 자원봉사 프로그램</Link></li>
+                    <li><Link to="/international" className={"nav-item" + router.isActive("/", true) ? "active" : ""}>청소년 국제 프로그램</Link></li>
                 </ul>
             </div>
         );

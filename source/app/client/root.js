@@ -1,9 +1,9 @@
 import React from "react";
-import {BrowserRouter} from "react-router-dom";
+import {Router} from ""
 import {Provider} from "react-redux";
 import App from "app";
 
-const Root = () => (
+const Root = ({store}) => (
     <BrowserRouter>
         <App />
     </BrowserRouter>
