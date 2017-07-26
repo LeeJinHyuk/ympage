@@ -1,11 +1,10 @@
 // Actions
-const CHANGE_TAB = "app/modules/state/CHANGE_TAB";
+export const CHANGE_TAB = "app/modules/state/CHANGE_TAB";
 
 // Init value
 const init_value = {
     tab_index : "0"
 };
-
 
 const reducer = (_state = init_value, _action) => {
     switch (_action.type) {
