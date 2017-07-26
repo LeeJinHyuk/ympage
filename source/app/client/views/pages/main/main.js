@@ -5,7 +5,10 @@ class Main extends Component {
 
     render() {
         return (
-            <MainHeader />
+            <div>
+                <MainHeader />
+                {this.props.children}
+            </div>
         );
     }
 }
