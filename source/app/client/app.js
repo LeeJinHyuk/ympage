@@ -5,7 +5,7 @@ import {Router, Route, IndexRoute, browserHistory} from "react-router";
 import Reducer from "modules/index";
 import {Main, Activity, International, Serve} from "views/pages";
 
-let store = createStore(Reducer);
+let store = createStore(Reducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 
 class App extends Component {
     render() {
