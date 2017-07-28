@@ -7,7 +7,7 @@ class Main extends Component {
     render() {
         return (
             <div>
-                <MainHeader />
+                <MainHeader onChangeTab={this.props.onChangeTab} />
                 {this.props.children}
             </div>
         );
@@ -15,11 +15,17 @@ class Main extends Component {
 }
 
 const mapStateToProps = (_state, _ownProps) => {
-  console.log(_state);
-  console.log(_ownProps);
   return {
     tab_index : _state.tab_index
   };
 };
 
-export default connect(mapStateToProps)(Main);
+const mapDispatchToProps = (_dispatch, _ownProps) => {
+    return {
+        onChangeTab : (_event) => {
+            console.log(_event);
+        }
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Main);
