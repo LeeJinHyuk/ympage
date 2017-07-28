@@ -1,26 +1,65 @@
+import { combineReducers } from 'redux';
+
 // Actions
-export const CHANGE_TAB = "app/modules/state/CHANGE_TAB";
+export const SET_ACTIVITY_LIST = "app/modules/state/SET_ACTIVITY_LIST";
+export const SET_SERVE_LIST = "app/modules/state/SET_SERVE_LIST";
+export const SET_INTERNATIONAL_LIST = "app/modules/state/SET_INTERNATIONAL_LIST";
 
 // Init value
-const init_value = {
-    tab_index : "0"
+const init_activity = {
+    listData : undefined
 };
 
-const reducer = (_state = init_value, _action) => {
+const init_serve = {
+    listData : undefined
+};
+
+const init_international = {
+    listData : undefined
+};
+
+const activity = (_state = init_activity, _action) => {
     switch (_action.type) {
-        case CHANGE_TAB :
-            return Object.assign({}, _state, {
-                tab_index : _state.tab_index
-            });
-        default:
+
+        default :
             return _state;
     }
 };
 
-export default reducer;
+const serve = (_state = init_serve, _action) => {
+    switch (_action.type) {
+
+        default :
+            return _state;
+    }
+};
+
+const international = (_state = init_international, _action) => {
+    switch (_action.type) {
+
+        default :
+            return _state;
+    }
+};
+
+export default combineReducers({
+    activity : activity,
+    serve : serve,
+    international : international
+});
 
 // Action Creators
-export const changeTab = (_index) => ({
-    type : CHANGE_TAB,
-    tab_index : _index
+export const setActivityListData = (_data) => ({
+    type : SET_ACTIVITY_LIST,
+    listData : _data
+});
+
+export const setServeListData = (_data) => ({
+    type : SET_SERVE_LIST,
+    listData : _data
+});
+
+export const setInternationalListData = (_data) => ({
+    type : SET_INTERNATIONAL_LIST,
+    listData : _data
 });
