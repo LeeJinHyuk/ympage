@@ -1,13 +1,19 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
+// import {changeTab, CHANGE_TAB} from "modules/state";
 import {MainHeader} from "views/components";
 
 class Main extends Component {
 
+    componentDidMount() {
+        console.log("componentDidMount");
+        console.log(this.props.listData);
+    }
+
     render() {
         return (
             <div>
-                <MainHeader onChangeTab={this.props.onChangeTab} />
+                <MainHeader />
                 {this.props.children}
             </div>
         );
@@ -15,17 +21,19 @@ class Main extends Component {
 }
 
 const mapStateToProps = (_state, _ownProps) => {
+  console.log(_ownProps);
   return {
-    tab_index : _state.tab_index
+    listData : "list"
   };
 };
 
-const mapDispatchToProps = (_dispatch, _ownProps) => {
-    return {
-        onChangeTab : (_event) => {
-            console.log(_event);
-        }
-    };
-};
+// const mapDispatchToProps = (_dispatch, _ownProps) => {
+//   console.log("mapDispatchToProps");
+//     return {
+//         onChangeTab : (_event, _index) => {
+//           _dispatch(changeTab(_index))
+//         }
+//     };
+// };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Main);
+export default connect(mapStateToProps)(Main);
