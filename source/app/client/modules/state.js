@@ -6,19 +6,19 @@ export const SET_SERVE_LIST = "app/modules/state/SET_SERVE_LIST";
 export const SET_INTERNATIONAL_LIST = "app/modules/state/SET_INTERNATIONAL_LIST";
 
 // Init value
-const init_activity = {
-    listData : undefined
+const initData = {
+    activity : {
+        listData : undefined
+    },
+    serve : {
+        listData : undefined
+    },
+    international : {
+        listData : undefined
+    }
 };
 
-const init_serve = {
-    listData : undefined
-};
-
-const init_international = {
-    listData : undefined
-};
-
-const activity = (_state = init_activity, _action) => {
+const activity = (_state = initData.activity, _action) => {
     switch (_action.type) {
 
         default :
@@ -26,7 +26,7 @@ const activity = (_state = init_activity, _action) => {
     }
 };
 
-const serve = (_state = init_serve, _action) => {
+const serve = (_state = initData.serve, _action) => {
     switch (_action.type) {
 
         default :
@@ -34,7 +34,7 @@ const serve = (_state = init_serve, _action) => {
     }
 };
 
-const international = (_state = init_international, _action) => {
+const international = (_state = initData.international, _action) => {
     switch (_action.type) {
 
         default :
