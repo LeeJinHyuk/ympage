@@ -22,7 +22,7 @@ const initData = {
     }
 };
 
-const pageType = (_state = initData.state, _action) => {
+const state = (_state = initData.state, _action) => {
     switch (_action.type) {
         case SET_PAGE_TYPE :
             return Object.assign({}, _state, {
@@ -67,7 +67,7 @@ const international = (_state = initData.international, _action) => {
 };
 
 export default combineReducers({
-    state : pageType,
+    state : state,
     activity : activity,
     serve : serve,
     international : international

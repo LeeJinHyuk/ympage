@@ -1,14 +1,21 @@
 // npm modules
 import React, {Component} from "react";
-import {createStore} from "redux";
+import {createStore, applyMiddleware, compose} from "redux";
 import {Provider} from "react-redux";
 import {Router, Route, IndexRoute, browserHistory} from "react-router";
+import ReduxThunk from 'redux-thunk';
 
 // user modules
 import Reducer from "modules/index";
 import {Main, Activity, International, Serve} from "views/pages";
 
-let store = createStore(Reducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
+let store = createStore(
+    Reducer, 
+    compose(
+        applyMiddleware(ReduxThunk),
+        window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+    )
+);
 
 class App extends Component {
     render() {
