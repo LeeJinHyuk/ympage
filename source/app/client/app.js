@@ -1,7 +1,10 @@
+// npm modules
 import React, {Component} from "react";
 import {createStore} from "redux";
 import {Provider} from "react-redux";
 import {Router, Route, IndexRoute, browserHistory} from "react-router";
+
+// user modules
 import Reducer from "modules/index";
 import {Main, Activity, International, Serve} from "views/pages";
 
