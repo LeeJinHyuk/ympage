@@ -9,7 +9,8 @@ module.exports = {
     },
     devtool : "inline-source-map",
     devServer : {
-        contentBase : path.join(__dirname, "source/app/client")
+        contentBase : path.join(__dirname, "source/app/client"),
+        historyApiFallback : true
     },
     output : {
         path : path.join(__dirname, "source/dist"),
