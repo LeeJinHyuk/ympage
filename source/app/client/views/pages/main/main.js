@@ -6,6 +6,7 @@ import {MainHeader} from "views/components";
 
 class Main extends Component {
     constructor(props) {
+        console.log("constructor Main");
         super(props);
     }
 
