@@ -3,7 +3,7 @@ import React, {Component} from "react";
 import {connect} from "react-redux";
 
 // user modules
-import {setServeListData} from "modules/state";
+import {SET_SERVE_LIST, setListData} from "modules/state";
 
 class Serve extends Component {
 
@@ -23,7 +23,7 @@ class Serve extends Component {
         let listData = props.listData;
 
         if (!listData) {
-            props.setListData();
+            props.setListData(SET_SERVE_LIST);
         }
     }
 
@@ -66,8 +66,8 @@ const mapStateToProps = (_state, _ownProps) => {
 
 const mapDispatchToProps = (_dispatch, _ownProps) => {
     return {
-        setListData : () => {
-            _dispatch(setServeListData("serve"))
+        setListData : (_type) => {
+            _dispatch(setListData(_type));
         }
     };
 };

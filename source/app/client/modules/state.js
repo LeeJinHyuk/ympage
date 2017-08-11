@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+import axios from 'axios';
 
 /**
  * init value
@@ -23,7 +24,23 @@ const initData = {
  * private logic function
  */
 const requestData = (_type) => {
+    let result;
 
+    switch(_type) {
+        case SET_ACTIVITY_LIST :
+            result = axios.get("http://openapi.youth.go.kr/openapi/service/YouthActivInfoCertiSrvc/getCertiProgrmList?serviceKey=HF1eUr96KfQkuZe3Pl1v0stWJvCU8eH72E%2BPGfe%2BiUOMDUlk0P1%2FMgO4SpXf0qq74hzOF7ctuBDJl2L7aXXOsw%3D%3D&numOfRows=10", {
+                headers: { "crossDomain" : true }
+            });
+            break;
+        case SET_SERVE_LIST :
+            result = axios.get("http://openapi.youth.go.kr/openapi/service/YouthActivInfoCertiSrvc/getCertiProgrmList?serviceKey=HF1eUr96KfQkuZe3Pl1v0stWJvCU8eH72E%2BPGfe%2BiUOMDUlk0P1%2FMgO4SpXf0qq74hzOF7ctuBDJl2L7aXXOsw%3D%3D&numOfRows=10");
+            break;
+        case SET_INTERNATIONAL_LIST :
+            result = axios.get("http://openapi.youth.go.kr/openapi/service/YouthActivInfoCertiSrvc/getCertiProgrmList?serviceKey=HF1eUr96KfQkuZe3Pl1v0stWJvCU8eH72E%2BPGfe%2BiUOMDUlk0P1%2FMgO4SpXf0qq74hzOF7ctuBDJl2L7aXXOsw%3D%3D&numOfRows=10");
+            break;
+    }
+
+    return result;
 };
 
 /**
@@ -53,33 +70,18 @@ export const setListData = (_type) => (_dispatch) => {
 
     _dispatch(setLoadingState(true));
 
-    switch(_type) {
-        case SET_ACTIVITY_LIST :
-            
-            break;
-        case SET_SERVE_LIST :
-
-            break;
-        case SET_INTERNATIONAL_LIST :
-
-            break;
-    }
+    return requestData(_type).then(
+        (response) => {
+            console.log(response);
+            _dispatch(setLoadingState(false));
+        }
+    ).catch(
+        (error) => {
+            console.log(error);
+            _dispatch(setLoadingState(false));
+        }
+    );
 };
-
-// export const setActivityListData = (_listData) => ({
-//     type : SET_ACTIVITY_LIST,
-//     listData : _listData
-// });
-
-// export const setServeListData = (_listData) => ({
-//     type : SET_SERVE_LIST,
-//     listData : _listData
-// });
-
-// export const setInternationalListData = (_listData) => ({
-//     type : SET_INTERNATIONAL_LIST,
-//     listData : _listData
-// });
 
 /**
  * Reducers
