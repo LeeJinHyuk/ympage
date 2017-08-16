@@ -28,15 +28,13 @@ const requestData = (_type) => {
 
     switch(_type) {
         case SET_ACTIVITY_LIST :
-            result = axios.get("http://openapi.youth.go.kr/openapi/service/YouthActivInfoCertiSrvc/getCertiProgrmList?serviceKey=HF1eUr96KfQkuZe3Pl1v0stWJvCU8eH72E%2BPGfe%2BiUOMDUlk0P1%2FMgO4SpXf0qq74hzOF7ctuBDJl2L7aXXOsw%3D%3D&numOfRows=10", {
-                headers: { "crossDomain" : true }
-            });
+            result = axios.get("https://kytza9xk2k.execute-api.ap-northeast-1.amazonaws.com/content/list/getCertiProgrmList/10");
             break;
         case SET_SERVE_LIST :
-            result = axios.get("http://openapi.youth.go.kr/openapi/service/YouthActivInfoCertiSrvc/getCertiProgrmList?serviceKey=HF1eUr96KfQkuZe3Pl1v0stWJvCU8eH72E%2BPGfe%2BiUOMDUlk0P1%2FMgO4SpXf0qq74hzOF7ctuBDJl2L7aXXOsw%3D%3D&numOfRows=10");
+            result = axios.get("https://kytza9xk2k.execute-api.ap-northeast-1.amazonaws.com/content/list/getCertiProgrmList/10");
             break;
         case SET_INTERNATIONAL_LIST :
-            result = axios.get("http://openapi.youth.go.kr/openapi/service/YouthActivInfoCertiSrvc/getCertiProgrmList?serviceKey=HF1eUr96KfQkuZe3Pl1v0stWJvCU8eH72E%2BPGfe%2BiUOMDUlk0P1%2FMgO4SpXf0qq74hzOF7ctuBDJl2L7aXXOsw%3D%3D&numOfRows=10");
+            result = axios.get("https://kytza9xk2k.execute-api.ap-northeast-1.amazonaws.com/content/list/getCertiProgrmList/10");
             break;
     }
 
