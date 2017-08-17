@@ -31,10 +31,10 @@ const requestData = (_type) => {
             result = axios.get("https://kytza9xk2k.execute-api.ap-northeast-1.amazonaws.com/content/list/getCertiProgrmList/10");
             break;
         case SET_SERVE_LIST :
-            result = axios.get("https://kytza9xk2k.execute-api.ap-northeast-1.amazonaws.com/content/list/getCertiProgrmList/10");
+            result = axios.get("https://kytza9xk2k.execute-api.ap-northeast-1.amazonaws.com/content/list/getVolProgrmList/10");
             break;
         case SET_INTERNATIONAL_LIST :
-            result = axios.get("https://kytza9xk2k.execute-api.ap-northeast-1.amazonaws.com/content/list/getCertiProgrmList/10");
+            result = axios.get("https://kytza9xk2k.execute-api.ap-northeast-1.amazonaws.com/content/list/getYngbgsIntrlExchgProgrmList/10");
             break;
     }
 
@@ -69,13 +69,13 @@ export const setListData = (_type) => (_dispatch) => {
     _dispatch(setLoadingState(true));
 
     return requestData(_type).then(
-        (response) => {
-            console.log(response);
+        (_response) => {
+            console.log(_response);
             _dispatch(setLoadingState(false));
         }
     ).catch(
-        (error) => {
-            console.log(error);
+        (_error) => {
+            console.log(_error);
             _dispatch(setLoadingState(false));
         }
     );
