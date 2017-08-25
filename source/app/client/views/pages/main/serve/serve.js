@@ -7,15 +7,19 @@ import {SET_SERVE_LIST, setListData} from "modules/state";
 
 class Serve extends Component {
 
+    /**
+     * Life cycle func
+    */
     constructor(props) {
         console.log("constructor Serve");
         super(props);
+
+        this.makeList = this.makeList.bind(this);
     }
 
     componentWillMount() {
         console.log("componentWillMount Serve");
     }
-
 
     componentDidMount() {
         console.log("componentDidMount Serve");
@@ -49,18 +53,38 @@ class Serve extends Component {
         console.log("componentWillUnmount Serve");
     }
 
-    render() {
+    /**
+     * User func
+     */
+    makeList() {
+        let items = this.props.listData.items[0].item;
 
-        return(
-            <div>{this.props.listData}</div>
-        );
+        return items.map((_item, _idx) => {
+            return (<li key={_idx}>{_item.organNm[0]}</li>);
+        });
     }
 
+    render() {
+        return(
+            <div>
+                {
+                    this.props.listData
+                        ?
+                        <ul>
+                            {this.makeList()}
+                        </ul>
+                        :
+                        ""
+                }
+            </div>
+        );
+    }
 }
 
 const mapStateToProps = (_state, _ownProps) => {
     return {
-        listData : _state.serve.listData
+        listData : _state.serve.listData,
+        errorMessage : _state.serve.errorMessage
     };
 };
 

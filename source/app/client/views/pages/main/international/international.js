@@ -7,15 +7,19 @@ import {SET_INTERNATIONAL_LIST, setListData} from "modules/state";
 
 class International extends Component {
 
+    /**
+     * Life cycle func
+    */
     constructor(props) {
         console.log("constructor International");
         super(props);
+
+        this.makeList = this.makeList.bind(this);
     }
 
     componentWillMount() {
         console.log("componentWillMount International");
     }
-
 
     componentDidMount() {
         console.log("componentDidMount International");
@@ -49,18 +53,38 @@ class International extends Component {
         console.log("componentWillUnmount International");
     }
 
-    render() {
+    /**
+     * User func
+     */
+    makeList() {
+        let items = this.props.listData.items[0].item;
 
-        return(
-            <div>{this.props.listData}</div>
-        );
+        return items.map((_item, _idx) => {
+            return (<li key={_idx}>{_item.organNm[0]}</li>);
+        });
     }
 
+    render() {
+        return(
+            <div>
+                {
+                    this.props.listData
+                        ?
+                        <ul>
+                            {this.makeList()}
+                        </ul>
+                        :
+                        ""
+                }
+            </div>
+        );
+    }
 }
 
 const mapStateToProps = (_state, _ownProps) => {
     return {
-        listData : _state.international.listData
+        listData : _state.international.listData,
+        errorMessage : _state.international.errorMessage
     };
 };
 
