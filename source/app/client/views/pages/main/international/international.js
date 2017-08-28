@@ -60,7 +60,7 @@ class International extends Component {
         let items = this.props.listData.items[0].item;
 
         return items.map((_item, _idx) => {
-            return (<li key={_idx}>{_item.organNm[0]}</li>);
+            return (<li key={_idx}>{_item.arName[0]}</li>);
         });
     }
 
