@@ -25,10 +25,9 @@ class Activity extends Component {
         console.log("componentDidMount Activity");
         let props = this.props; 
         let listData = props.listData;
-        let ttt;
 
         if (!listData) {
-            ttt = props.setListData(SET_ACTIVITY_LIST);
+            props.setListData(SET_ACTIVITY_LIST);
         }
     }
 
