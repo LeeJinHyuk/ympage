@@ -25,9 +25,10 @@ class Activity extends Component {
         console.log("componentDidMount Activity");
         let props = this.props; 
         let listData = props.listData;
+        let ttt;
 
         if (!listData) {
-            props.setListData(SET_ACTIVITY_LIST);
+            ttt = props.setListData(SET_ACTIVITY_LIST);
         }
     }
 
@@ -91,7 +92,7 @@ const mapStateToProps = (_state, _ownProps) => {
 const mapDispatchToProps = (_dispatch, _ownProps) => {
     return {
         setListData : (_type) => {
-            _dispatch(setListData(_type));
+            return _dispatch(setListData(_type));
         }
     };
 };

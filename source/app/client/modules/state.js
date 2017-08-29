@@ -28,19 +28,41 @@ const initData = {
  */
 const requestData = (_type) => {
     let result;
+    let CancelToken = axios.CancelToken;
+    let cancelRequest;
 
     switch(_type) {
         case SET_ACTIVITY_LIST :
-            result = axios.get("https://kytza9xk2k.execute-api.ap-northeast-1.amazonaws.com/content/list/getCertiProgrmList/10");
+            result = axios.get("https://kytza9xk2k.execute-api.ap-northeast-1.amazonaws.com/content/list/getCertiProgrmList/10",
+                {
+                    cancelToken : new CancelToken(function executor(c) {
+                        cancelRequest = c;
+                    })
+                }
+            );
             break;
         case SET_SERVE_LIST :
-            result = axios.get("https://kytza9xk2k.execute-api.ap-northeast-1.amazonaws.com/content/list/getVolProgrmList/10");
+            result = axios.get("https://kytza9xk2k.execute-api.ap-northeast-1.amazonaws.com/content/list/getVolProgrmList/10",
+                {
+                    cancelToken : new CancelToken(function executor(c) {
+                        cancelRequest = c;
+                    })
+                }
+            );
             break;
         case SET_INTERNATIONAL_LIST :
-            result = axios.get("https://kytza9xk2k.execute-api.ap-northeast-1.amazonaws.com/content/list/getYngbgsIntrlExchgProgrmList/10");
+            result = axios.get("https://kytza9xk2k.execute-api.ap-northeast-1.amazonaws.com/content/list/getYngbgsIntrlExchgProgrmList/10",
+                {
+                    cancelToken : new CancelToken(function executor(c) {
+                        cancelRequest = c;
+                    })
+                }
+            );
             break;
     }
 
+    // add cancelRequest
+    result["cancelRequest"] = cancelRequest;
     return result;
 };
 
@@ -77,13 +99,13 @@ export const setListData = (_type) => (_dispatch, _getState) => {
 
     switch(_type) {
         case SET_ACTIVITY_LIST :
-            currentListData = _getState().activity;
+            currentListData = _getState().activity.listData;
             break;
         case SET_SERVE_LIST :
-            currentListData = _getState().serve;
+            currentListData = _getState().serve.listData;
             break;
         case SET_INTERNATIONAL_LIST :
-            currentListData = _getState().international;
+            currentListData = _getState().international.listData;
             break;
     }
 

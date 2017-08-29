@@ -91,7 +91,7 @@ const mapStateToProps = (_state, _ownProps) => {
 const mapDispatchToProps = (_dispatch, _ownProps) => {
     return {
         setListData : (_type) => {
-            _dispatch(setListData(_type));
+            return _dispatch(setListData(_type));
         }
     };
 };
