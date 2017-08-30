@@ -25,7 +25,7 @@ class Activity extends Component {
         console.log("componentDidMount Activity");
         let props = this.props; 
         let listData = props.listData;
-
+        
         if (!listData) {
             props.setListData(SET_ACTIVITY_LIST);
         }
@@ -51,6 +51,10 @@ class Activity extends Component {
 
     componentWillUnmount() {
         console.log("componentWillUnmount Activity");
+        let props = this.props;
+        if (props.cancelReq) {
+            props.cancelReq();
+        }
     }
 
     /**
@@ -83,6 +87,7 @@ class Activity extends Component {
 
 const mapStateToProps = (_state, _ownProps) => {
     return {
+        cancelReq : _state.state.cancelReq,
         listData : _state.activity.listData,
         errorMessage : _state.activity.errorMessage
     };

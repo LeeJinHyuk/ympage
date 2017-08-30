@@ -51,6 +51,10 @@ class International extends Component {
 
     componentWillUnmount() {
         console.log("componentWillUnmount International");
+        let props = this.props;
+        if (props.cancelReq) {
+            props.cancelReq();
+        }
     }
 
     /**
@@ -83,6 +87,7 @@ class International extends Component {
 
 const mapStateToProps = (_state, _ownProps) => {
     return {
+        cancelReq : _state.state.cancelReq,
         listData : _state.international.listData,
         errorMessage : _state.international.errorMessage
     };

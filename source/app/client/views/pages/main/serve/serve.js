@@ -51,6 +51,10 @@ class Serve extends Component {
 
     componentWillUnmount() {
         console.log("componentWillUnmount Serve");
+        let props = this.props;
+        if (props.cancelReq) {
+            props.cancelReq();
+        }
     }
 
     /**
@@ -83,6 +87,7 @@ class Serve extends Component {
 
 const mapStateToProps = (_state, _ownProps) => {
     return {
+        cancelReq : _state.state.cancelReq,
         listData : _state.serve.listData,
         errorMessage : _state.serve.errorMessage
     };

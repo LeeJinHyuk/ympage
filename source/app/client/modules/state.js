@@ -7,7 +7,8 @@ import axios from 'axios';
 const initData = {
     state : {
         pageType : undefined,
-        isLoading : false
+        isLoading : false,
+        cancelReq : undefined
     },
     activity : {
         listData : undefined,
@@ -26,43 +27,38 @@ const initData = {
 /**
  * private logic function
  */
-const requestData = (_type) => {
+const requestData = (_type, _dispatch) => {
     let result;
     let CancelToken = axios.CancelToken;
-    let cancelRequest;
+    var source = CancelToken.source();
 
     switch(_type) {
         case SET_ACTIVITY_LIST :
             result = axios.get("https://kytza9xk2k.execute-api.ap-northeast-1.amazonaws.com/content/list/getCertiProgrmList/10",
                 {
-                    cancelToken : new CancelToken(function executor(c) {
-                        cancelRequest = c;
-                    })
+                    cancelToken: source.token
                 }
             );
             break;
         case SET_SERVE_LIST :
             result = axios.get("https://kytza9xk2k.execute-api.ap-northeast-1.amazonaws.com/content/list/getVolProgrmList/10",
                 {
-                    cancelToken : new CancelToken(function executor(c) {
-                        cancelRequest = c;
-                    })
+                    cancelToken: source.token
                 }
             );
             break;
         case SET_INTERNATIONAL_LIST :
             result = axios.get("https://kytza9xk2k.execute-api.ap-northeast-1.amazonaws.com/content/list/getYngbgsIntrlExchgProgrmList/10",
                 {
-                    cancelToken : new CancelToken(function executor(c) {
-                        cancelRequest = c;
-                    })
+                    cancelToken: source.token
                 }
             );
             break;
     }
 
-    // add cancelRequest
-    result["cancelRequest"] = cancelRequest;
+    // Start loading
+    _dispatch(setLoadingState(true, source.cancel));
+
     return result;
 };
 
@@ -78,9 +74,10 @@ export const SET_INTERNATIONAL_LIST = "app/modules/state/SET_INTERNATIONAL_LIST"
 /**
  * Action Creators (private, public)
  */
-const setLoadingState = (_isLoading) => ({
+const setLoadingState = (_isLoading, _cancelReq) => ({
     type : SET_LOADING_STATE,
-    isLoading : _isLoading
+    isLoading : _isLoading,
+    cancelReq : _cancelReq
 });
 
 const setData = (_type, _response) => ({
@@ -109,10 +106,7 @@ export const setListData = (_type) => (_dispatch, _getState) => {
             break;
     }
 
-    // Start loading
-    _dispatch(setLoadingState(true));
-
-    return requestData(_type).then(
+    return requestData(_type, _dispatch).then(
         (_response) => {
             if (_response.errorMessage) {
                 _dispatch(
@@ -137,7 +131,7 @@ export const setListData = (_type) => (_dispatch, _getState) => {
             }
 
             // Stop loading
-            _dispatch(setLoadingState(false));
+            _dispatch(setLoadingState(false, undefined));
         }
     ).catch(
         (_error) => {
@@ -151,7 +145,7 @@ export const setListData = (_type) => (_dispatch, _getState) => {
                 )
             );
 
-            _dispatch(setLoadingState(false));
+            _dispatch(setLoadingState(false, undefined));
         }
     );
 };
@@ -170,7 +164,8 @@ const state = (_state = initData.state, _action) => {
             break;
         case SET_LOADING_STATE :
             state = Object.assign({}, _state, {
-                isLoading : _action.isLoading
+                isLoading : _action.isLoading,
+                cancelReq : _action.cancelReq
             }); 
             break; 
         default :
@@ -184,7 +179,6 @@ const state = (_state = initData.state, _action) => {
 const activity = (_state = initData.activity, _action) => {
     switch (_action.type) {
         case SET_ACTIVITY_LIST :
-                    console.log(_action.type);
             return Object.assign({}, _state, {
                 listData : _action.listData,
                 errorMessage : _action.errorMessage
@@ -197,7 +191,6 @@ const activity = (_state = initData.activity, _action) => {
 const serve = (_state = initData.serve, _action) => {
     switch (_action.type) {
         case SET_SERVE_LIST :
-            console.log(_action.type);
             return Object.assign({}, _state, {
                 listData : _action.listData,
                 errorMessage : _action.errorMessage
