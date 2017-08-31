@@ -1,5 +1,6 @@
 // npm modules
 import React, {Component} from "react";
+import {Link} from "react-router";
 import {connect} from "react-redux";
 
 // user modules
@@ -64,23 +65,31 @@ class Activity extends Component {
         let items = this.props.listData.items[0].item;
 
         return items.map((_item, _idx) => {
-            return (<li key={_idx}>{_item.organNm[0]}</li>);
+            return (
+                <Link to={"/search/activity/" + _item.key1[0]} key={_idx}>
+                    <ul>
+                        <li>기관명 : {_item.organNm[0]}</li>
+                        <li>프로그램명 : {_item.pgmNm[0]}</li>
+                        <li>참가비 : {_item.price[0]}</li>
+                        <li>참가대상 : {_item.target[0]}</li>
+                        <li>등록일 : {_item.sdate[0]}</li>
+                    </ul>
+                </Link>
+            );
         });
     }
 
     render() {
         return(
-            <div>
+            <section>
                 {
                     this.props.listData
                         ?
-                        <ul>
-                            {this.makeList()}
-                        </ul>
+                        this.makeList()
                         :
                         ""
                 }
-            </div>
+            </section>
         );
     }
 }
