@@ -1,5 +1,6 @@
 // npm modules
 import React, {Component} from "react";
+import {Link} from "react-router";
 import {connect} from "react-redux";
 
 // user modules
@@ -64,23 +65,45 @@ class International extends Component {
         let items = this.props.listData.items[0].item;
 
         return items.map((_item, _idx) => {
-            return (<li key={_idx}>{_item.arName[0]}</li>);
+            return (
+                <Link to={"/search/international/" + _idx} key={_idx}>
+                    <ul>
+                        <li>활동프로그램이름 : {_item.arName[0]}</li>
+                        {/*<li>내용 : {_item.arContent[0]}</li>*/}
+                        {/*<li dangerouslySetInnerHTML={{__html: _item.arContent[0]}}></li>*/}
+                        <li>연도 : {_item.arYear[0]}</li>
+                        {/*<li>상태코드 : {_item.arStatus[0]}</li>*/}
+                        {
+                            _item.arStartDate
+                            ?
+                            <li>시작일자 : {_item.arStartDate[0]}</li>
+                            :
+                            ""
+                        }
+                        {
+                            _item.arEndDate
+                            ?
+                            <li>종료일자 : {_item.arEndDate[0]}</li>
+                            :
+                            ""
+                        }
+                    </ul>
+                </Link>
+            );
         });
     }
 
     render() {
         return(
-            <div>
+            <section>
                 {
                     this.props.listData
                         ?
-                        <ul>
-                            {this.makeList()}
-                        </ul>
+                        this.makeList()
                         :
                         ""
                 }
-            </div>
+            </section>
         );
     }
 }
