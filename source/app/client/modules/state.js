@@ -12,27 +12,33 @@ const initData = {
     },
     activity : {
         listData : undefined,
+        detailData : undefined,
         errorMessage : ""
     },
     serve : {
         listData : undefined,
+        detailData : undefined,
         errorMessage : ""
     },
     international : {
         listData : undefined,
+        detailData : undefined,
         errorMessage : ""
     }
 };
-
+//getCertiProgrmInfo
+//http://openapi.youth.go.kr/openapi/service/YouthActivInfoCertiSrvc/getCertiProgrmInfo?serviceKey=인증키(utf-8 인코딩)&key1=고유번호
 /**
  * private logic function
  */
-const requestData = (_type, _dispatch) => {
+const requestData = (_obj, _dispatch) => {
     let result;
     let CancelToken = axios.CancelToken;
     var source = CancelToken.source();
+    let type = _obj.type;
+    let key = _obj.key;
 
-    switch(_type) {
+    switch(type) {
         case SET_ACTIVITY_LIST :
             result = axios.get("https://kytza9xk2k.execute-api.ap-northeast-1.amazonaws.com/content/list/getCertiProgrmList/10",
                 {
@@ -54,6 +60,13 @@ const requestData = (_type, _dispatch) => {
                 }
             );
             break;
+        case SET_ACTIVITY_DETAIL :
+            result = axios.get("https://kytza9xk2k.execute-api.ap-northeast-1.amazonaws.com/content/detail/getCertiProgrmInfo/" + key,
+                {
+                    cancelToken: source.token
+                }
+            );
+            break;
     }
 
     // Start loading
@@ -67,9 +80,14 @@ const requestData = (_type, _dispatch) => {
  */
 const SET_LOADING_STATE = "app/modules/state/SET_LOADING_STATE";
 export const SET_PAGE_TYPE = "app/modules/state/SET_PAGE_TYPE";
+// List
 export const SET_ACTIVITY_LIST = "app/modules/state/SET_ACTIVITY_LIST";
 export const SET_SERVE_LIST = "app/modules/state/SET_SERVE_LIST";
 export const SET_INTERNATIONAL_LIST = "app/modules/state/SET_INTERNATIONAL_LIST";
+// Detail
+export const SET_ACTIVITY_DETAIL = "app/modules/state/SET_ACTIVITY_DETAIL";
+export const SET_SERVE_DETAIL = "app/modules/state/SET_SERVE_DETAIL";
+export const SET_INTERNATIONAL_DETAIL = "app/modules/state/SET_INTERNATIONAL_DETAIL";
 
 /**
  * Action Creators (private, public)
@@ -80,21 +98,16 @@ const setLoadingState = (_isLoading, _cancelReq) => ({
     cancelReq : _cancelReq
 });
 
-const setData = (_type, _response) => ({
-    type : _type,
-    listData : _response.listData,
-    errorMessage : _response.errorMessage
-});
-
 export const setPageType = (_pageType) => ({
     type : SET_PAGE_TYPE,
     pageType : _pageType
 });
 
-export const setListData = (_type) => (_dispatch, _getState) => {
+export const setListData = (_obj) => (_dispatch, _getState) => {
     let currentListData;
+    let type = _obj.type;
 
-    switch(_type) {
+    switch(type) {
         case SET_ACTIVITY_LIST :
             currentListData = _getState().activity.listData;
             break;
@@ -106,28 +119,54 @@ export const setListData = (_type) => (_dispatch, _getState) => {
             break;
     }
 
-    return requestData(_type, _dispatch).then(
+    return requestData(_obj, _dispatch).then(
         (_response) => {
             if (_response.errorMessage) {
-                _dispatch(
-                    setData(
-                        _type,
-                        {
-                            listData : currentListData,
-                            errorMessage : _response.errorMessage
-                        }
-                    )
-                );
+                switch(type) {
+                    case SET_ACTIVITY_LIST :
+                    case SET_SERVE_LIST :
+                    case SET_INTERNATIONAL_LIST :
+                        _dispatch(
+                            {
+                                type : type,
+                                listData : currentListData,
+                                errorMessage : _response.errorMessage
+                            }
+                        );       
+                        break;
+                    case SET_ACTIVITY_DETAIL :
+                        _dispatch(
+                            {
+                                type : type,
+                                detailData : undefined,
+                                errorMessage : _response.errorMessage
+                            }
+                        );   
+                        break;
+                }
             } else {
-                _dispatch(
-                    setData(
-                        _type,
-                        {
-                            listData : _response.data.response.body[0],
-                            errorMessage : ""
-                        } 
-                    )
-                );
+                switch(type) {
+                    case SET_ACTIVITY_LIST :
+                    case SET_SERVE_LIST :
+                    case SET_INTERNATIONAL_LIST :
+                        _dispatch(
+                            {
+                                type : type,
+                                listData : _response.data.response.body[0],
+                                errorMessage : ""
+                            } 
+                        );
+                        break;
+                    case SET_ACTIVITY_DETAIL :
+                        _dispatch(
+                            {
+                                type : type,
+                                detailData : _response.data.response.body[0],
+                                errorMessage : ""
+                            } 
+                        );
+                        break;
+                }
             }
 
             // Stop loading
@@ -136,13 +175,11 @@ export const setListData = (_type) => (_dispatch, _getState) => {
     ).catch(
         (_error) => {
             _dispatch(
-                setData(
-                    _type,
-                    {
-                        listData : currentListData,
-                        errorMessage : _error
-                    }
-                )
+                {
+                    type : type,
+                    listData : currentListData,
+                    errorMessage : _error
+                }
             );
 
             _dispatch(setLoadingState(false, undefined));
@@ -181,6 +218,11 @@ const activity = (_state = initData.activity, _action) => {
         case SET_ACTIVITY_LIST :
             return Object.assign({}, _state, {
                 listData : _action.listData,
+                errorMessage : _action.errorMessage
+            });
+        case SET_ACTIVITY_DETAIL :
+            return Object.assign({}, _state, {
+                detailData : _action.detailData,
                 errorMessage : _action.errorMessage
             });
         default :

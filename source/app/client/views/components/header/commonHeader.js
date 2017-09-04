@@ -18,7 +18,7 @@ class CommonHeader extends Component {
                         <li>
                             <Link to="/serve"
                                 className="">
-                                청소년 자원봉사 프로그램
+                                {this.props.title}
                             </Link>
                         </li>
                     </ul>

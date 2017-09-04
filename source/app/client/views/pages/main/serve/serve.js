@@ -28,7 +28,11 @@ class Serve extends Component {
         let listData = props.listData;
 
         if (!listData) {
-            props.setListData(SET_SERVE_LIST);
+            props.setListData(
+                {
+                    type : SET_SERVE_LIST
+                }
+            );
         }
     }
 
@@ -104,8 +108,8 @@ const mapStateToProps = (_state, _ownProps) => {
 
 const mapDispatchToProps = (_dispatch, _ownProps) => {
     return {
-        setListData : (_type) => {
-            return _dispatch(setListData(_type));
+        setListData : (_obj) => {
+            return _dispatch(setListData(_obj));
         }
     };
 };
