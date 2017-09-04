@@ -66,7 +66,7 @@ class Serve extends Component {
 
         return items.map((_item, _idx) => {
             return (
-                <Link to={"/search/serve/" + _item.key1[0]} key={_idx}>
+                <Link to={"/detail/serve/" + _item.key1[0]} key={_idx}>
                     <ul>
                         <li>기관명 : {_item.organNm[0]}</li>
                         <li>프로그램명 : {_item.pgmNm[0]}</li>

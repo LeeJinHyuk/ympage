@@ -66,7 +66,7 @@ class International extends Component {
 
         return items.map((_item, _idx) => {
             return (
-                <Link to={"/search/international/" + _idx} key={_idx}>
+                <Link to={"/detail/international/" + _idx} key={_idx}>
                     <ul>
                         <li>활동프로그램이름 : {_item.arName[0]}</li>
                         {/*<li>내용 : {_item.arContent[0]}</li>*/}

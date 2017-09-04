@@ -2,12 +2,17 @@
 import React, {Component} from "react";
 
 // user modules
-
+import {CommonHeader} from "views/components";
 
 class Detail extends Component {
     constructor(props) {
         console.log("constructor Detail");
         super(props);
+        
+        let params = this.props.params;
+
+        this.page = params.page;
+        this.id = params.id; 
     }
 
     componentWillMount() {
@@ -43,6 +48,7 @@ class Detail extends Component {
     render() {
         return (
             <div>
+                <CommonHeader />
                 {this.props.children}
             </div>
         );
