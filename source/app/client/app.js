@@ -28,7 +28,7 @@ class App extends Component {
                         <Route path="international" component={International} />
                     </Route>
                     <Route path="/detail" component={Detail}>
-                        <Route path="test" component={Content} />
+                        <Route path=":page/:id" component={Content} />
                     </Route>
                 </Router>
             </Provider>
