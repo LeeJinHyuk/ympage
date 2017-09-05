@@ -4,7 +4,7 @@ import {connect} from "react-redux";
 
 // user modules
 import {CommonHeader} from "views/components";
-import {SET_ACTIVITY_DETAIL, setListData} from "modules/state";
+import {SET_ACTIVITY_DETAIL, SET_SERVE_DETAIL, SET_INTERNATIONAL_DETAIL,  setListData} from "modules/state";
 
 class Detail extends Component {
 
@@ -28,11 +28,24 @@ class Detail extends Component {
 
     componentDidMount() {
         console.log("componentDidMount Detail");
-        let props = this.props; 
+        let props = this.props;
+        let type;
+
+        switch(this.page) {
+            case "activity" :
+                type = SET_ACTIVITY_DETAIL;
+                break;
+            case "serve" :
+                type = SET_SERVE_DETAIL;
+                break;
+            case "international" :
+                type = SET_INTERNATIONAL_DETAIL;
+                break;
+        }
 
         props.setListData(
             {
-                type : SET_ACTIVITY_DETAIL,
+                type : type,
                 key : this.id
             }
         );
@@ -41,8 +54,17 @@ class Detail extends Component {
     componentWillReceiveProps(nextProps) {
         console.log("componentWillReceiveProps Detail");
         let detailData = this.props.detailData;
-
+        console.log(detailData);
         if (detailData) {
+            switch(this.page) {
+                case "activity" :
+                case "serve" :
+
+                    break;
+                case "international" :
+
+                    break;
+            }
             this.item = detailData.items[0].item[0];
         }
     }
@@ -67,13 +89,26 @@ class Detail extends Component {
     render() {
         return (
             <div>
-                <CommonHeader title={this.item ? this.item.pgmNm[0] : ""} />
+                {
+                    this.item
+                    ?
+                        <CommonHeader detailData={ this.item } />
+                    :
+                        ""
+                }
+
                 {
                     this.item 
                     ?
-                    React.cloneElement(this.props.children, { detailData : this.item })
+                        React.cloneElement(
+                            this.props.children, 
+                            { 
+                                page : this.page, 
+                                detailData : this.item 
+                            }
+                        )
                     :
-                    ""
+                        ""
                 }
             </div>
         );
@@ -90,10 +125,17 @@ const mapStateToProps = (_state, _ownProps) => {
             data = _state.activity.detailData;
             message = _state.activity.errorMessage;
             break;
+        case "serve" :
+            data = _state.serve.detailData;
+            message = _state.serve.errorMessage;
+            break;
+        case "international" :
+            data = _state.international.detailData;
+            message = _state.international.errorMessage;
+            break;
     }
 
     return {
-        cancelReq : _state.state.cancelReq,
         detailData : data,
         errorMessage : message
     };

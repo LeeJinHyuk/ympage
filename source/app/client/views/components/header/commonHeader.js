@@ -18,7 +18,7 @@ class CommonHeader extends Component {
                         <li>
                             <Link to="/serve"
                                 className="">
-                                {this.props.title}
+                                {this.props.detailData.pgmNm[0]}
                             </Link>
                         </li>
                     </ul>

@@ -67,6 +67,13 @@ const requestData = (_obj, _dispatch) => {
                 }
             );
             break;
+        case SET_SERVE_DETAIL :
+            result = axios.get("https://kytza9xk2k.execute-api.ap-northeast-1.amazonaws.com/content/detail/getVolProgrmInfo/" + key,
+                {
+                    cancelToken: source.token
+                }
+            );
+            break;
     }
 
     // Start loading
@@ -115,76 +122,91 @@ export const setListData = (_obj) => (_dispatch, _getState) => {
             currentListData = _getState().serve.listData;
             break;
         case SET_INTERNATIONAL_LIST :
+        case SET_INTERNATIONAL_DETAIL :
             currentListData = _getState().international.listData;
             break;
     }
 
-    return requestData(_obj, _dispatch).then(
-        (_response) => {
-            if (_response.errorMessage) {
-                switch(type) {
-                    case SET_ACTIVITY_LIST :
-                    case SET_SERVE_LIST :
-                    case SET_INTERNATIONAL_LIST :
-                        _dispatch(
-                            {
-                                type : type,
-                                listData : currentListData,
-                                errorMessage : _response.errorMessage
-                            }
-                        );       
-                        break;
-                    case SET_ACTIVITY_DETAIL :
-                        _dispatch(
-                            {
-                                type : type,
-                                detailData : undefined,
-                                errorMessage : _response.errorMessage
-                            }
-                        );   
-                        break;
-                }
-            } else {
-                switch(type) {
-                    case SET_ACTIVITY_LIST :
-                    case SET_SERVE_LIST :
-                    case SET_INTERNATIONAL_LIST :
-                        _dispatch(
-                            {
-                                type : type,
-                                listData : _response.data.response.body[0],
-                                errorMessage : ""
-                            } 
-                        );
-                        break;
-                    case SET_ACTIVITY_DETAIL :
-                        _dispatch(
-                            {
-                                type : type,
-                                detailData : _response.data.response.body[0],
-                                errorMessage : ""
-                            } 
-                        );
-                        break;
-                }
+    if (type === SET_INTERNATIONAL_DETAIL) {
+        _dispatch(
+            {
+                type : type,
+                detailData : currentListData ? currentListData.items[0].item[Number(_obj.key, 10)] : undefined,
+                errorMessage : currentListData ? "" : "empty"
             }
-
-            // Stop loading
-            _dispatch(setLoadingState(false, undefined));
-        }
-    ).catch(
-        (_error) => {
-            _dispatch(
-                {
-                    type : type,
-                    listData : currentListData,
-                    errorMessage : _error
+        );    
+    } else {
+        return requestData(_obj, _dispatch).then(
+            (_response) => {
+                if (_response.errorMessage) {
+                    switch(type) {
+                        case SET_ACTIVITY_LIST :
+                        case SET_SERVE_LIST :
+                        case SET_INTERNATIONAL_LIST :
+                            _dispatch(
+                                {
+                                    type : type,
+                                    listData : currentListData,
+                                    errorMessage : _response.errorMessage
+                                }
+                            );       
+                            break;
+                        case SET_ACTIVITY_DETAIL :
+                        case SET_SERVE_DETAIL :
+                        case SET_INTERNATIONAL_DETAIL :
+                            _dispatch(
+                                {
+                                    type : type,
+                                    detailData : undefined,
+                                    errorMessage : _response.errorMessage
+                                }
+                            );   
+                            break;
+                    }
+                } else {
+                    switch(type) {
+                        case SET_ACTIVITY_LIST :
+                        case SET_SERVE_LIST :
+                        case SET_INTERNATIONAL_LIST :
+                            _dispatch(
+                                {
+                                    type : type,
+                                    listData : _response.data.response.body[0],
+                                    errorMessage : ""
+                                } 
+                            );
+                            break;
+                        case SET_ACTIVITY_DETAIL :
+                        case SET_SERVE_DETAIL :
+                        case SET_INTERNATIONAL_DETAIL :
+                            _dispatch(
+                                {
+                                    type : type,
+                                    detailData : _response.data.response.body[0],
+                                    errorMessage : ""
+                                } 
+                            );
+                            break;
+                    }
                 }
-            );
 
-            _dispatch(setLoadingState(false, undefined));
-        }
-    );
+                // Stop loading
+                _dispatch(setLoadingState(false, undefined));
+            }
+        ).catch(
+            (_error) => {
+                _dispatch(
+                    {
+                        type : type,
+                        listData : currentListData,
+                        errorMessage : _error
+                    }
+                );
+
+                _dispatch(setLoadingState(false, undefined));
+            }
+        );
+    }
 };
 
 /**
@@ -237,6 +259,11 @@ const serve = (_state = initData.serve, _action) => {
                 listData : _action.listData,
                 errorMessage : _action.errorMessage
             }); 
+        case SET_SERVE_DETAIL :
+            return Object.assign({}, _state, {
+                detailData : _action.detailData,
+                errorMessage : _action.errorMessage
+            });
         default :
             return _state;
     }
@@ -248,7 +275,12 @@ const international = (_state = initData.international, _action) => {
             return Object.assign({}, _state, {
                 listData : _action.listData,
                 errorMessage : _action.errorMessage
-            });  
+            });
+        case SET_INTERNATIONAL_DETAIL :
+            return Object.assign({}, _state, {
+                detailData : _action.detailData,
+                errorMessage : _action.errorMessage
+            });    
         default :
             return _state;
     }
