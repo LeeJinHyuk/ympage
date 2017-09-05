@@ -21,7 +21,7 @@ class Content extends Component {
 
     componentWillReceiveProps(nextProps) {
         console.log("componentWillReceiveProps Content");
-
+        console.log(this.props);
     }
 
     shouldComponentUpdate(nextProps, nextState) {

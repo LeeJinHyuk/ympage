@@ -68,7 +68,7 @@ class Detail extends Component {
         return (
             <div>
                 <CommonHeader title={this.item ? this.item.pgmNm[0] : ""} />
-                {this.props.children}
+                {React.cloneElement(this.props.children, { title : this.item ? this.item : "" })}
             </div>
         );
     }
