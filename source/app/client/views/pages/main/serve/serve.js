@@ -66,17 +66,17 @@ class Serve extends Component {
      * User func
      */
     makeList() {
-        let items = this.props.listData.items[0].item;
+        let items = this.props.listData.data;
 
         return items.map((_item, _idx) => {
             return (
-                <Link to={"/detail/serve/" + _item.key1[0]} key={_idx}>
+                <Link to={"/detail/serve/" + _item.key1} key={_idx}>
                     <ul>
-                        <li>기관명 : {_item.organNm[0]}</li>
-                        <li>프로그램명 : {_item.pgmNm[0]}</li>
-                        <li>참가비 : {_item.price[0]}</li>
-                        <li>참가대상 : {_item.target[0]}</li>
-                        <li>등록일 : {_item.sdate[0]}</li>
+                        <li>기관명 : {_item.organNm}</li>
+                        <li>프로그램명 : {_item.pgmNm}</li>
+                        <li>참가비 : {_item.price}</li>
+                        <li>참가대상 : {_item.target}</li>
+                        <li>등록일 : {_item.sdate}</li>
                     </ul>
                 </Link>
             );

@@ -54,7 +54,7 @@ class Detail extends Component {
     componentWillReceiveProps(nextProps) {
         console.log("componentWillReceiveProps Detail");
         let detailData = this.props.detailData;
-        console.log(detailData);
+        console.log(nextProps);
         if (detailData) {
             switch(this.page) {
                 case "activity" :

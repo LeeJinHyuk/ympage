@@ -171,7 +171,7 @@ export const setListData = (_obj) => (_dispatch, _getState) => {
                             _dispatch(
                                 {
                                     type : type,
-                                    listData : _response.data.response.body[0],
+                                    listData : _response.data,
                                     errorMessage : ""
                                 } 
                             );
@@ -182,7 +182,7 @@ export const setListData = (_obj) => (_dispatch, _getState) => {
                             _dispatch(
                                 {
                                     type : type,
-                                    detailData : _response.data.response.body[0],
+                                    detailData : _response.data,
                                     errorMessage : ""
                                 } 
                             );
