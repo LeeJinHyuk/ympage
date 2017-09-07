@@ -73,52 +73,49 @@ class Detail extends Component {
 
     componentWillUnmount() {
         console.log("componentWillUnmount Detail");
+        let props = this.props;
+
+        if (props.cancelReq) {
+            props.cancelReq();
+        }
     }
 
     /**
      * User func
      */
     getTitle() {
-        let items = this.props.listData.data;
+        let title;
 
-        return items.map((_item, _idx) => {
-            return (
-                <Link to={"/detail/activity/" + _item.key1} key={_idx}>
-                    <ul>
-                        <li>기관명 : {_item.organNm}</li>
-                        <li>프로그램명 : {_item.pgmNm}</li>
-                        <li>참가비 : {_item.price}</li>
-                        <li>참가대상 : {_item.target}</li>
-                        <li>등록일 : {_item.sdate}</li>
-                    </ul>
-                </Link>
-            );
-        });
+        switch(this.page) {
+            case "activity" :
+            case "serve" :
+                title = this.props.detailData.data[0].pgmNm;
+                break;
+            case "international" :
+                title = this.props.detailData.data[0].arName;
+                break;
+        }
+
+        return title;
     }
 
     render() {
+
         return (
             <div>
                 {
-                    this.props.detailData
-                    ?
+                    this.props.detailData && 
                         <CommonHeader title={ this.getTitle() } />
-                    :
-                        ""
                 }
-
                 {
-                    this.item 
-                    ?
+                    this.props.detailData &&
                         React.cloneElement(
                             this.props.children, 
                             { 
                                 page : this.page, 
-                                detailData : this.item 
+                                detailData : this.props.detailData.data[0]
                             }
                         )
-                    :
-                        ""
                 }
             </div>
         );
@@ -146,6 +143,7 @@ const mapStateToProps = (_state, _ownProps) => {
     }
 
     return {
+        cancelReq : _state.state.cancelReq,
         detailData : data,
         errorMessage : message
     };

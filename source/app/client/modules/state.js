@@ -128,10 +128,11 @@ export const setListData = (_obj) => (_dispatch, _getState) => {
     }
 
     if (type === SET_INTERNATIONAL_DETAIL) {
+
         _dispatch(
             {
                 type : type,
-                detailData : currentListData ? currentListData.data[Number(_obj.key, 10)] : undefined,
+                detailData : currentListData ? { data : [currentListData.data[Number(_obj.key, 10)]] } : undefined,
                 errorMessage : currentListData ? "" : "empty"
             }
         );    

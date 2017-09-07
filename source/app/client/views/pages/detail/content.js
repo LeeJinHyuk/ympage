@@ -21,7 +21,6 @@ class Content extends Component {
 
     componentWillReceiveProps(nextProps) {
         console.log("componentWillReceiveProps Content");
-        console.log(this.props);
     }
 
     shouldComponentUpdate(nextProps, nextState) {
@@ -43,7 +42,7 @@ class Content extends Component {
 
     render() {
         return (
-            <div>test</div>
+            <div>{this.props.detailData.pgmNm}</div>
         );
     }
 }
