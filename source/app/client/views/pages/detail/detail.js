@@ -17,9 +17,12 @@ class Detail extends Component {
         
         let params = this.props.params;
 
+        // parent page name
         this.page = params.page;
-        this.id = params.id; 
-        this.item;
+        // detail data id
+        this.id = params.id;
+
+        this.getTitle = this.getTitle.bind(this);
     }
 
     componentWillMount() {
@@ -53,20 +56,6 @@ class Detail extends Component {
 
     componentWillReceiveProps(nextProps) {
         console.log("componentWillReceiveProps Detail");
-        let detailData = this.props.detailData;
-        console.log(nextProps);
-        if (detailData) {
-            switch(this.page) {
-                case "activity" :
-                case "serve" :
-
-                    break;
-                case "international" :
-
-                    break;
-            }
-            this.item = detailData.items[0].item[0];
-        }
     }
 
     shouldComponentUpdate(nextProps, nextState) {
@@ -86,13 +75,34 @@ class Detail extends Component {
         console.log("componentWillUnmount Detail");
     }
 
+    /**
+     * User func
+     */
+    getTitle() {
+        let items = this.props.listData.data;
+
+        return items.map((_item, _idx) => {
+            return (
+                <Link to={"/detail/activity/" + _item.key1} key={_idx}>
+                    <ul>
+                        <li>기관명 : {_item.organNm}</li>
+                        <li>프로그램명 : {_item.pgmNm}</li>
+                        <li>참가비 : {_item.price}</li>
+                        <li>참가대상 : {_item.target}</li>
+                        <li>등록일 : {_item.sdate}</li>
+                    </ul>
+                </Link>
+            );
+        });
+    }
+
     render() {
         return (
             <div>
                 {
-                    this.item
+                    this.props.detailData
                     ?
-                        <CommonHeader detailData={ this.item } />
+                        <CommonHeader title={ this.getTitle() } />
                     :
                         ""
                 }

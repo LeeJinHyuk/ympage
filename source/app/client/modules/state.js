@@ -131,7 +131,7 @@ export const setListData = (_obj) => (_dispatch, _getState) => {
         _dispatch(
             {
                 type : type,
-                detailData : currentListData ? currentListData.items[0].item[Number(_obj.key, 10)] : undefined,
+                detailData : currentListData ? currentListData.data[Number(_obj.key, 10)] : undefined,
                 errorMessage : currentListData ? "" : "empty"
             }
         );    
