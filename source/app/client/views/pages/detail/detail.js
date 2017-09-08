@@ -104,7 +104,7 @@ class Detail extends Component {
         return (
             <div>
                 {
-                    this.props.detailData && 
+                    this.props.detailData &&
                         <CommonHeader title={ this.getTitle() } />
                 }
                 {

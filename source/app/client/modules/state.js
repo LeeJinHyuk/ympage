@@ -26,8 +26,7 @@ const initData = {
         errorMessage : ""
     }
 };
-//getCertiProgrmInfo
-//http://openapi.youth.go.kr/openapi/service/YouthActivInfoCertiSrvc/getCertiProgrmInfo?serviceKey=인증키(utf-8 인코딩)&key1=고유번호
+
 /**
  * private logic function
  */
@@ -122,12 +121,25 @@ export const setListData = (_obj) => (_dispatch, _getState) => {
             currentListData = _getState().serve.listData;
             break;
         case SET_INTERNATIONAL_LIST :
-        case SET_INTERNATIONAL_DETAIL :
             currentListData = _getState().international.listData;
+            break;
+        case SET_ACTIVITY_DETAIL : 
+        case SET_SERVE_DETAIL :
+        case SET_INTERNATIONAL_DETAIL :
+            // Init detailData before call http
+            _dispatch(
+                {
+                    type : type,
+                    detailData : undefined,
+                    errorMessage : ""
+                }
+            );
             break;
     }
 
     if (type === SET_INTERNATIONAL_DETAIL) {
+
+        currentListData = _getState().international.listData;
 
         _dispatch(
             {
