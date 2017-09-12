@@ -23,6 +23,7 @@ class Detail extends Component {
         this.id = params.id;
 
         this.getTitle = this.getTitle.bind(this);
+        this.backHistory = this.backHistory.bind(this);
     }
 
     componentWillMount() {
@@ -99,13 +100,16 @@ class Detail extends Component {
         return title;
     }
 
-    render() {
+    backHistory() {
+        this.props.router.goBack();
+    }
 
+    render() {
         return (
             <div>
                 {
                     this.props.detailData &&
-                        <CommonHeader title={ this.getTitle() } />
+                        <CommonHeader title={ this.getTitle() } backHistory={ this.backHistory } />
                 }
                 {
                     this.props.detailData &&

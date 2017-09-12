@@ -4,22 +4,22 @@ import {Link} from "react-router";
 class CommonHeader extends Component {
 
     render() {
-
         return (
             <header>
                 <nav>
                     <ul>
                         <li>
-                            <Link to="/"
-                                className="">
+                            <div
+                                className=""
+                                onClick={this.props.backHistory}>
                                 뒤로가기
-                            </Link>
+                            </div>
                         </li>
                         <li>
-                            <Link to="/serve"
+                            <div
                                 className="">
                                 { this.props.title }
-                            </Link>
+                            </div>
                         </li>
                     </ul>
                 </nav>
