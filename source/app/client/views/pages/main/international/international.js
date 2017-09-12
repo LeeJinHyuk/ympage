@@ -16,6 +16,7 @@ class International extends Component {
         super(props);
 
         this.makeList = this.makeList.bind(this);
+        this.requestList = this.requestList.bind(this);
     }
 
     componentWillMount() {
@@ -97,16 +98,34 @@ class International extends Component {
         });
     }
 
+    requestList() {
+        let props = this.props;
+
+        props.setListData(
+            {
+                type : SET_INTERNATIONAL_LIST,
+                page : props.page
+            }
+        );
+    }
+
     render() {
         return(
             <section>
-                {
-                    this.props.listData
-                        ?
-                        this.makeList()
-                        :
-                        ""
-                }
+                <div className="list-wrap">
+                    {
+                        this.props.listData
+                            ?
+                            this.makeList()
+                            :
+                            ""
+                    }
+                </div>
+                <div 
+                    className="more-btn-wrap"
+                    onClick={this.requestList}>
+                    더보기
+                </div>
             </section>
         );
     }
@@ -115,6 +134,7 @@ class International extends Component {
 const mapStateToProps = (_state, _ownProps) => {
     return {
         cancelReq : _state.state.cancelReq,
+        page : _state.international.page,
         listData : _state.international.listData,
         errorMessage : _state.international.errorMessage
     };

@@ -11,16 +11,19 @@ const initData = {
         cancelReq : undefined
     },
     activity : {
+        page : 1,
         listData : undefined,
         detailData : undefined,
         errorMessage : ""
     },
     serve : {
+        page : 1,
         listData : undefined,
         detailData : undefined,
         errorMessage : ""
     },
     international : {
+        page : 1,
         listData : undefined,
         detailData : undefined,
         errorMessage : ""
@@ -36,24 +39,25 @@ const requestData = (_obj, _dispatch) => {
     var source = CancelToken.source();
     let type = _obj.type;
     let key = _obj.key;
+    let page = _obj.page ? _obj.page * 10 : 10;
 
     switch(type) {
         case SET_ACTIVITY_LIST :
-            result = axios.get("https://kytza9xk2k.execute-api.ap-northeast-1.amazonaws.com/content/list/getCertiProgrmList/10",
+            result = axios.get("https://kytza9xk2k.execute-api.ap-northeast-1.amazonaws.com/content/list/getCertiProgrmList/" + page,
                 {
                     cancelToken: source.token
                 }
             );
             break;
         case SET_SERVE_LIST :
-            result = axios.get("https://kytza9xk2k.execute-api.ap-northeast-1.amazonaws.com/content/list/getVolProgrmList/10",
+            result = axios.get("https://kytza9xk2k.execute-api.ap-northeast-1.amazonaws.com/content/list/getVolProgrmList/" + page,
                 {
                     cancelToken: source.token
                 }
             );
             break;
         case SET_INTERNATIONAL_LIST :
-            result = axios.get("https://kytza9xk2k.execute-api.ap-northeast-1.amazonaws.com/content/list/getYngbgsIntrlExchgProgrmList/10",
+            result = axios.get("https://kytza9xk2k.execute-api.ap-northeast-1.amazonaws.com/content/list/getYngbgsIntrlExchgProgrmList/" + page,
                 {
                     cancelToken: source.token
                 }
@@ -111,17 +115,21 @@ export const setPageType = (_pageType) => ({
 
 export const setListData = (_obj) => (_dispatch, _getState) => {
     let currentListData;
+    let currentPage;
     let type = _obj.type;
 
     switch(type) {
         case SET_ACTIVITY_LIST :
             currentListData = _getState().activity.listData;
+            currentPage = _getState().activity.page;
             break;
         case SET_SERVE_LIST :
             currentListData = _getState().serve.listData;
+            currentPage = _getState().serve.page;
             break;
         case SET_INTERNATIONAL_LIST :
             currentListData = _getState().international.listData;
+            currentPage = _getState().international.page;
             break;
         case SET_ACTIVITY_DETAIL : 
         case SET_SERVE_DETAIL :
@@ -181,13 +189,28 @@ export const setListData = (_obj) => (_dispatch, _getState) => {
                         case SET_ACTIVITY_LIST :
                         case SET_SERVE_LIST :
                         case SET_INTERNATIONAL_LIST :
-                            _dispatch(
-                                {
-                                    type : type,
-                                    listData : _response.data,
-                                    errorMessage : ""
-                                } 
-                            );
+                            if (currentListData) {
+
+                                currentListData.data = currentListData.data.concat(_response.data.data);
+
+                                _dispatch(
+                                    {
+                                        type : type,
+                                        page : ++currentPage,
+                                        listData : currentListData,
+                                        errorMessage : ""
+                                    } 
+                                );
+                            } else {
+                                _dispatch(
+                                    {
+                                        type : type,
+                                        page : ++currentPage,
+                                        listData : _response.data,
+                                        errorMessage : ""
+                                    } 
+                                );
+                            }
                             break;
                         case SET_ACTIVITY_DETAIL :
                         case SET_SERVE_DETAIL :
@@ -252,6 +275,7 @@ const activity = (_state = initData.activity, _action) => {
     switch (_action.type) {
         case SET_ACTIVITY_LIST :
             return Object.assign({}, _state, {
+                page : _action.page,
                 listData : _action.listData,
                 errorMessage : _action.errorMessage
             });
@@ -269,6 +293,7 @@ const serve = (_state = initData.serve, _action) => {
     switch (_action.type) {
         case SET_SERVE_LIST :
             return Object.assign({}, _state, {
+                page : _action.page,
                 listData : _action.listData,
                 errorMessage : _action.errorMessage
             }); 
@@ -286,6 +311,7 @@ const international = (_state = initData.international, _action) => {
     switch (_action.type) {
         case SET_INTERNATIONAL_LIST :
             return Object.assign({}, _state, {
+                page : _action.page,
                 listData : _action.listData,
                 errorMessage : _action.errorMessage
             });

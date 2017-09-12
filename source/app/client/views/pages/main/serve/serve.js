@@ -16,6 +16,7 @@ class Serve extends Component {
         super(props);
 
         this.makeList = this.makeList.bind(this);
+        this.requestList = this.requestList.bind(this);
     }
 
     componentWillMount() {
@@ -83,16 +84,34 @@ class Serve extends Component {
         });
     }
 
+    requestList() {
+        let props = this.props;
+
+        props.setListData(
+            {
+                type : SET_SERVE_LIST,
+                page : props.page
+            }
+        );
+    }
+
     render() {
         return(
             <div>
-                {
-                    this.props.listData
-                        ?
-                        this.makeList()
-                        :
-                        ""
-                }
+                <div className="list-wrap">
+                    {
+                        this.props.listData
+                            ?
+                            this.makeList()
+                            :
+                            ""
+                    }
+                </div>
+                <div 
+                    className="more-btn-wrap"
+                    onClick={this.requestList}>
+                    더보기
+                </div>
             </div>
         );
     }
@@ -101,6 +120,7 @@ class Serve extends Component {
 const mapStateToProps = (_state, _ownProps) => {
     return {
         cancelReq : _state.state.cancelReq,
+        page : _state.serve.page,
         listData : _state.serve.listData,
         errorMessage : _state.serve.errorMessage
     };
