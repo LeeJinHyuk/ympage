@@ -4,6 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no">
     <title><%= htmlWebpackPlugin.options.title %></title>
+    <!-- firebase code -->
+    <script src="https://www.gstatic.com/firebasejs/4.3.1/firebase.js"></script>
+    <script>
+      // Initialize Firebase
+      var config = {
+        apiKey: "AIzaSyDcIAX3pLTYodCScTU9g2psIfjkG5BHfmA",
+        authDomain: "seoulapp-391fe.firebaseapp.com",
+        databaseURL: "https://seoulapp-391fe.firebaseio.com",
+        projectId: "seoulapp-391fe",
+        storageBucket: "",
+        messagingSenderId: "92794462361"
+      };
+      firebase.initializeApp(config);
+    </script>
+    <!-- firebase code -->
   </head>
   <body>
     <div id="root"></div>

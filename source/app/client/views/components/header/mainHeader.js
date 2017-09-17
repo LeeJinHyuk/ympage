@@ -2,6 +2,20 @@ import React, {Component} from "react";
 import {Link} from "react-router";
 
 class MainHeader extends Component {
+    /**
+     * Life cycle func
+    */
+    constructor(props) {
+        console.log("constructor MainHeader");
+        super(props);
+
+        this.testFunc = this.testFunc.bind(this);
+    }
+
+    testFunc() {
+        var provider = new firebase.auth.FacebookAuthProvider();
+        firebase.auth().signInWithRedirect(provider);
+    }
 
     render() {
         const {router} = this.context;
@@ -27,6 +41,9 @@ class MainHeader extends Component {
                                 className={"nav-item" + router.isActive("/", true) ? "active" : ""}>
                                 청소년 국제 프로그램
                             </Link>
+                        </li>
+                        <li>
+                            <div onClick={this.testFunc}>페이스북 로그인</div>
                         </li>
                     </ul>
                 </nav>
