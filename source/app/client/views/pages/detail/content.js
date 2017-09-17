@@ -54,7 +54,7 @@ class Content extends Component {
                 content = (
                     <ul>
                         <li>{item.nums}</li>
-                        <li>{item.orgNm}</li>
+                        <li>{item.organNm}</li>
                         <li>{item.price}</li>
                         <li>{item.target}</li>
                         <li>{item.managerNm}</li>
@@ -68,7 +68,7 @@ class Content extends Component {
             case "serve" :
                 content = (
                     <ul>
-                        <li>{item.orgNm}</li>
+                        <li>{item.organNm}</li>
                         <li>{item.price}</li>
                         <li>{item.target}</li>
                         <li>{item.sdate}</li>
